@@ -155,8 +155,8 @@ namespace util {
         function php($file = "", $hash = "", $test = false){
 
             // If you don't give a valid file. (Must be .php and can read)
-            $this->validFile($file, $line);
-            $this->extension($file, 'php', $line);
+            $this->validFile($file);
+            $this->extension($file, 'php');
 
             // Get file hash
             $hash_local = hash_file('sha256', $file);
@@ -275,30 +275,30 @@ namespace util {
                 // html content
                 case 'html':
                     // make file content array with all data
-                    $file_content = array($file, $hash, $test, $line);
+                    $file_content = array($file, $hash, $test);
                     // Add content to array
                     array_push($this->contents, $file_content);
                     break;
                 // style sheet
                 case 'css':
                     // make file content array with all data
-                    $file_content = array($file, $hash, $test, $line);
+                    $file_content = array($file, $hash, $test);
                     // Add css file to array
                     array_push($this->css, $file_content);
                     break;
                 // Scripts
                 case 'js':
                     // make file content array with all data
-                    $file_content = array($file, $hash, $test, $line);
+                    $file_content = array($file, $hash, $test);
                     // Add js file to array
                     array_push($this->js, $file_content);
                     break;
                 // Content php
                 case 'php':
                     // make file content array with all data
-                    $file_content = array($file, $hash, $test, $line);
+                    $file_content = array($file, $hash, $test);
                     // Add content file to array
-                    array_push($this->content, $file_content);
+                    array_push($this->contents, $file_content);
                     break;
                 // If file isn't supported
                 default:
