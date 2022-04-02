@@ -41,8 +41,8 @@ namespace util {
         function html($file="", $hash = "", $test = false){
 
             // If you don't give a valid file. (Must be .html and can read)
-            $this->validFile($file, $line);
-            $this->extension($file, 'html', $line);
+            $this->validFile($file);
+            $this->extension($file, 'html');
 
             // Get hash of file
             $hash_local = hash_file('sha256', $file);
@@ -80,8 +80,8 @@ namespace util {
         function css($file = "", $hash = "", $test = false){
 
             // If you don't give a valid file. (Must be .css and can read)
-            $this->validFile($file, $line);
-            $this->extension($file, 'css', $line);
+            $this->validFile($file);
+            $this->extension($file, 'css');
 
             // Get file hash
             $hash_local = hash_file('sha256', $file);
@@ -118,8 +118,8 @@ namespace util {
         function js($file = "", $hash = "", $test = false){
 
             // If you don't give a valid file. (Must be .js and can read)
-            $this->validFile($file, $line);
-            $this->extension($file, 'js', $line);
+            $this->validFile($file);
+            $this->extension($file, 'js');
 
             // Get file hash
             $hash_local = hash_file('sha256', $file);
@@ -265,7 +265,7 @@ namespace util {
         function add($file = "", $hash = "", $test = false){
 
             // Check for valid file
-            $this->validFile($file, $line);
+            $this->validFile($file);
 
             // info of extension of file
             $info = pathinfo($file, PATHINFO_EXTENSION);
