@@ -38,11 +38,11 @@ namespace util {
          * @throws Exception                File doesn't match
          * 
          * */
-        function html($file="", $hash = "", $test = false){
+        public static function html($file="", $hash = "", $test = false){
 
             // If you don't give a valid file. (Must be .html and can read)
-            $this->validFile($file);
-            $this->extension($file, 'html');
+            parent::validFile($file);
+            parent::extension($file, 'html');
 
             // Get hash of file
             $hash_local = hash_file('sha256', $file);
@@ -77,11 +77,11 @@ namespace util {
          * @throws Exception                File doesn't match 
          *          
          * */
-        function css($file = "", $hash = "", $test = false){
+        public static function css($file = "", $hash = "", $test = false){
 
             // If you don't give a valid file. (Must be .css and can read)
-            $this->validFile($file);
-            $this->extension($file, 'css');
+            parent::validFile($file);
+            parent::extension($file, 'css');
 
             // Get file hash
             $hash_local = hash_file('sha256', $file);
@@ -115,11 +115,11 @@ namespace util {
          * @throws Exception                File doesn't match   
          * 
          * */
-        function js($file = "", $hash = "", $test = false){
+        public static function js($file = "", $hash = "", $test = false){
 
             // If you don't give a valid file. (Must be .js and can read)
-            $this->validFile($file);
-            $this->extension($file, 'js');
+            parent::validFile($file);
+            parent::extension($file, 'js');
 
             // Get file hash
             $hash_local = hash_file('sha256', $file);
@@ -152,11 +152,11 @@ namespace util {
          * @throws Exception                File doesn't match   
          * 
          * */
-        function php($file = "", $hash = "", $test = false){
+        public static function php($file = "", $hash = "", $test = false){
 
             // If you don't give a valid file. (Must be .php and can read)
-            $this->validFile($file);
-            $this->extension($file, 'php');
+            parent::validFile($file);
+            parent::extension($file, 'php');
 
             // Get file hash
             $hash_local = hash_file('sha256', $file);
@@ -438,7 +438,7 @@ namespace util {
          * @throws Exception            File isn't readable
          * 
          * */
-        function validFile($file){  
+        public static function validFile($file){  
             // If you give a empty parameter
             if($file == null){
                 throw new Exception("Empty parameter.");
@@ -470,7 +470,7 @@ namespace util {
          * @throws Exception            File extension needed doesn't match
          * 
          * */
-        function extension($file, $ext){ 
+        public static function extension($file, $ext){ 
             // get file extension
             $ext = pathinfo($file, PATHINFO_EXTENSION);
             // Check
