@@ -1,29 +1,37 @@
 <?php
 
-// Add util.php lib
+// Lib used to create a web page
 require_once '../lib/php/util.php';
 
-// Use web class for complete load
+// Use web class
 use util\web;
-// Tools
+// For debug purposes
 use util\debug;
 
-try{
+// Catch exceptions (You can add a custom exception handler)
+try {
 
-    // New object web, without args
-    $web = new web();
+    // Create a web object
+    $web = new Web("Select", "EN");
 
-    // Add home content in test mode
-    $web->add('./docs/html/home/home.html', '', true);
+    // General css 
+    $web->add('./docs/agen/css/index.css', "", true);
 
-    // Compile web page
+    // Add navbar css
+    $web->add('./docs/agen/css/nav.css', "", true);
+
+    // Add header navbar
+    $web->add('./docs/agen/html/nav.php', "", true);
+
+    // Add content
+    $web->add('./docs/agen/html/index.php', "", true);
+
+    // Make web
     $web->make();
 
 }catch(Exception $e){
-    // Get readable message
-    $debug = debug::debugTrace($e);
-    // Print error message
-    echo $debug;
+    // Debug message (Not recommended in production for security reasons)
+    echo debug::debugTrace($e);
 }
 
 ?>
