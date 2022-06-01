@@ -21,7 +21,7 @@ namespace looking {
 
         /**
          * 
-         * This function return all nodes of an xml file
+         * This function return all nodes of an xml file as objects.
          * 
          * @param  string $file       File path
          * 
@@ -31,8 +31,6 @@ namespace looking {
          */
         public static function getNodes($file) {
 
-            $result = array();
-
             // Try to load file
             $xml = simplexml_load_file($file);
 
@@ -41,39 +39,119 @@ namespace looking {
                 throw new Exception("File doesn't readable.");
             }
 
-            // Get nodes
-            foreach($xml as $node){
-                array_push($result, $node);
-            }
-
-            return $result;
+            return $xml;
 
         }
-
-    }
-
-    /**
-     * 
-     * Personalized exceptions for this namespace.
-     * 
-     */
-
-    // Index error
-    class XmlIndexException extends Exception {
 
         /**
          * 
-         * Exception function constructor.
+         * This function return an array of xml objects with a given parameter. (Value insensitive) 
+         * 
+         * @param  string $file       File path
+         * @param  string $parameter  Name of the parameter (Null acts as getNodes)
+         * 
+         * @return array              Array of xml objects
+         * @throws Exception          File doesn't exist
          * 
          */
-        function __construct ($msg, $code = 0, Exception $Previous = null) {
+        public static function lookInsensitive($file, $parameter = null){
 
-            // All assings are properly
-            parent::__construct($msg, $code, $Previous);
+            // Get content
+            $nodes = look::getNodes($file);
+
+            // Make function work as a getNodes function.
+            if ($parameter == null){
+                return $nodes;
+            }
+
+            // Return array
+            $return = array();
+
+            // Check every node
+            foreach($nodes as $node){
+
+                // Get list of property in object
+                $properties_useless = get_object_vars($node);
+                
+                // Get keys
+                $properties = array_keys($properties_useless);
+                
+                // Check every property in list
+                foreach($properties as $property){
+
+                    // Match property
+                    if($property == $parameter){
+                        array_push($return, $node);
+                    }
+
+                }
+            }
+
+            return $return;
 
         }
 
-    }  
+        /**
+         * 
+         * This function return an array of xml objects with a given parameter and a given value.
+         * 
+         * @param  string $file       File path
+         * @param  string $parameter  Name of the parameter (Null acts as getNodes)
+         * @param  mixed  $value      Value to search (Null acts as lookInsensitive)
+         * 
+         * @return array              Array of xml objects
+         * @throws Exception          File doesn't exist
+         * 
+         */
+        public static function lookSensitive($file, $parameter = null, $value = null){
+
+            // If parameter not provided
+            if ($parameter == null){
+                return look::getNodes($file);
+            }
+
+            // if value not provided
+            if ($value == null){
+                return look::lookInsensitive($file, $parameter);
+            }
+
+            // Get content
+            $nodes = look::getNodes($file);
+
+            // Make function work as a getNodes function.
+            if ($parameter == null){
+                return $nodes;
+            }
+
+            // Return array
+            $return = array();
+
+            // Check every node
+            foreach($nodes as $node){
+
+                // Get list of property in object
+                $properties_useless = get_object_vars($node);
+                
+                // Get keys
+                $properties = array_keys($properties_useless);
+                
+                // Check every property in list
+                foreach($properties as $property){
+
+                    // Match property and value
+                    if(($property == $parameter) && ($node->$property == $value)){
+                        array_push($return, $node);
+                    }
+
+                }
+
+            }
+
+            return $return;
+
+        }
+
+    } 
 
 }
 
