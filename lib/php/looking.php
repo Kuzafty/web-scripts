@@ -25,7 +25,7 @@ namespace looking {
          * 
          * @param  string $file       File path
          * 
-         * @return array              Array of nodes
+         * @return SimpleXMLElement   Object of nodes
          * @throws Exception          File does not exist
          * 
          */
@@ -150,6 +150,52 @@ namespace looking {
             return $return;
 
         }
+
+        /**
+         * 
+         * This functions searches for a property name in an xml object. Even into objects inside.
+         * And returns the value or values of that property.
+         * 
+         * @param  SimpleXMLElement $xml    XML node (Don't send full xml file)
+         * @param  string           $name   Name of the property
+         * 
+         * @return mixed            Values of property (False if not found)
+         * 
+         */
+        public static function getPropertyValue ($node, $name){
+
+            // Get list of property in object
+            $properties_useless = get_object_vars($node);
+                
+            // Get keys
+            $properties = array_keys($properties_useless);
+
+            // Look every property
+            foreach($properties as $property){
+
+                // If name is same as $name given
+                if($property == $name){
+                    return $node->$property;
+                }
+
+                // If value is an object
+                if(gettype($node->$property) == 'object'){
+                    // If tag name is into this property  
+                    $possible = look::getPropertyValue($node->$property, $name);
+                    // Check if value had found
+                    if($possible != false){
+                        // Return value
+                        return $possible;
+                    }
+                }
+
+            }
+
+            return false;
+
+        }
+
+        
 
     } 
 
